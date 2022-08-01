@@ -13,11 +13,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main extends Application {
 
-    private final int GAME_WIDTH = 400;
-    private final int GAME_HEIGHT = 800;
+    private final int GAME_WIDTH = 250;
+    private final int GAME_HEIGHT = 500;
     private final int SIZE = 25;
     private GraphicsContext gc;
     private KeyCode keycode = KeyCode.K;
@@ -51,7 +53,7 @@ public class Main extends Application {
             }
         });
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(130), e -> run(gc)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(150), e -> run(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
@@ -76,10 +78,10 @@ public class Main extends Application {
 
         // todo: Test code. Blocks should be created and added to the list in the BlockFactory
         if(activeBlockList.size() < 1) {
-            activeBlockList.add(new Block(1,12, 0, true)); // todo: need to add shape field to pass into controller and rotate as needed.
-            activeBlockList.add(new Block(2, 13, 0, true));
-            activeBlockList.add(new Block(3, 14, 0, true));
-            activeBlockList.add(new Block(4, 15, 0, true));
+            activeBlockList.add(new Block(1,5, 0, true)); // todo: need to add shape field to pass into controller and rotate as needed.
+            activeBlockList.add(new Block(2, 6, 0, true));
+            activeBlockList.add(new Block(3, 7, 0, true));
+            activeBlockList.add(new Block(4, 8, 0, true));
         }
 
         // Rotate active block shape
@@ -92,14 +94,16 @@ public class Main extends Application {
         });
         // Check for bottom or hitting another block
         activeBlockList.forEach(e -> {
-            if(e.getY() == 31 || controller.checkForBlockBelow(nonActiveBlockList, e)) {
+            if(e.getY() == 19 || controller.checkForBlockBelow(nonActiveBlockList, e)) {
                 // todo: probably remove active field from Block. All Block(s) in the non-Active List can be moved down as needed.
                 activeBlockList.forEach(i -> i.setActive(false));
-                activeBlockList.forEach(j -> {
-                    if(!j.isActive()) nonActiveBlockList.add(j);
-                });
             }
         });
+
+        activeBlockList.forEach(j -> {
+            if(!j.isActive()) nonActiveBlockList.add(j);
+        });
+
 
         // Move blocks down
         activeBlockList.forEach(e -> {
@@ -114,6 +118,24 @@ public class Main extends Application {
             gc.setFill(Color.RED); //todo: get color from block
             gc.fillRect(e.getX() * SIZE, e.getY() * SIZE, SIZE-1, SIZE-1);
         });
+
+        // Check non-active list row by row and determine if the row is full
+        // for blocks Y19 look at X0 to X10. Move bottom to top.
+        for(int i = 19; i > 0; i--) {
+            List fullRows = nonActiveBlockList.stream()
+                    .filter(f -> f.getY() == 19)
+                    .collect(Collectors.toList());
+            if(fullRows.size() == 10) {
+                System.out.println(fullRows);
+                fullRows.forEach(e -> {
+                    nonActiveBlockList.remove(e);
+                    // todo: update score
+                });
+                nonActiveBlockList.forEach(e -> {
+                    e.setY(e.getY() + 1);
+                });
+            }
+        }
 
 
         keycode = KeyCode.E;
