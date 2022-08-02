@@ -25,13 +25,13 @@ public class Controller {
         if(list.get(0).getX() == list.get(3).getX()){ // if top and bottom block have same x, then the l shape is in vertical form
             form = 1;
         }
-        else if(list.get(0).getY() == list.get(3).getY()){ // if 0 and 3 block have same Y, then the l shape is in horizontal form
+        if(list.get(0).getY() == list.get(3).getY()){ // if 0 and 3 block have same Y, then the l shape is in horizontal form
             form = 2;
         }
-        else if(list.get(0).getX() == list.get(3).getX() && list.get(0).getY()+3 == list.get(3).getY() ){ // l shape is in downward form
+        if(list.get(0).getX() == list.get(3).getX() && list.get(0).getY()+3 == list.get(3).getY() ){ // l shape is in downward form
             form = 3;
         }
-        else if (list.get(0).getY() == list.get(3).getY() && list.get(0).getX()-3 == list.get(3).getX()){ //l shape is horizontal pt.2
+        if (list.get(0).getY() == list.get(3).getY() && list.get(0).getX()-3 == list.get(3).getX()){ //l shape is horizontal pt.2
             form = 4;
         }
 
@@ -49,6 +49,7 @@ public class Controller {
                     list.get(2).setY(list.get(0).getY());
                     list.get(3).setX(list.get(0).getX()+3); // moves top block 3 spaces to the right of bottom block
                     list.get(3).setY(list.get(0).getY());
+                    System.out.println("Piece was vertical but is now horizontal");
                 }
                 else if(form == 2) {                                      // if piece is horizontal
                     list.get(1).setY(list.get(0).getY()+1);
@@ -59,6 +60,7 @@ public class Controller {
 
                     list.get(3).setY(list.get(0).getY()+3);
                     list.get(3).setX(list.get(0).getX());
+                    System.out.println("Piece was in form 'Horizontal A' but is now Downward");
                 }
                 else if (form == 3){                                      //if piece is downward
                     list.get(1).setX(list.get(0).getX()-1);
@@ -67,6 +69,7 @@ public class Controller {
                     list.get(2).setY(list.get(0).getY());
                     list.get(3).setX(list.get(0).getX()-3);
                     list.get(3).setY(list.get(0).getY());
+                    System.out.println("Piece was downward but is now in form 'Horizontal B'");
                 }
                 else if(form == 4) {                                      // if piece is horizontal pt. 2
                     list.get(1).setY(list.get(0).getY()-1);
@@ -77,6 +80,7 @@ public class Controller {
 
                     list.get(3).setY(list.get(0).getY()-3);
                     list.get(3).setX(list.get(0).getX());
+                    System.out.println("Piece was in form 'Horizontal B' but is now vertical");
                 }
 
                 //Todo:
