@@ -1,7 +1,7 @@
 # TetrisGenSK
 A game of Tetris in javaFX
 ## Running
-Project can be ran with the maven wrapper.
+Project can be run with the maven wrapper.
 
 Windows: `.\mvnw.cmd clean javafx:run`
 
