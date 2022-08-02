@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -65,6 +66,10 @@ public class Main extends Application {
                 }
             }
         }
+        // Score Display
+        gc.setFont(Font.font(25));
+        gc.setFill(Color.GREEN); // todo: color can be changed to something more fitting.
+        gc.fillText("Score\n  " + gameScore.getScore(), 300, 50);
 
         // todo: Call block factory. Pass in activeBlockList. Factory should randomly select shape and add to list.
 
@@ -122,6 +127,7 @@ public class Main extends Application {
             if(fullRows.size() == 10) {
                 fullRows.forEach(e -> {
                     nonActiveBlockList.remove(e);
+                    // todo: check for multiple line clears
                     gameScore.lineClear(1);
                 });
                 nonActiveBlockList.forEach(e -> e.setY(e.getY() + 1));
