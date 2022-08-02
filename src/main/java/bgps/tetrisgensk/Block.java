@@ -4,11 +4,11 @@ import javafx.scene.paint.Color;
 
 public class Block {
 
-    private int blockNumber;
+    private final int blockNumber;
     private int X;
     private int Y;
     private boolean active;
-    private Color color = Color.RED;
+    private final Color color = Color.RED;
     // todo: Make colors random
 
     public Block(int blockNumber, int x, int y, boolean active) {

@@ -1,7 +1,6 @@
 module bgps.tetrisgensk {
-    requires javafx.controls;
-    requires javafx.fxml;
-
+    requires javafx.graphics;
+    requires javafx.base;
 
     opens bgps.tetrisgensk to javafx.fxml;
     exports bgps.tetrisgensk;

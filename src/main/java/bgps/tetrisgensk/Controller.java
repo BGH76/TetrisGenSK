@@ -34,14 +34,11 @@ public class Controller {
                 break;
             case LEFT:
                 try {
-                    list.forEach(e -> {
-                        nonActiveList.forEach(i -> {
-                            if(e.getX()-1 == i.getX() && e.getY() == i.getY()) {
-                                throw new RuntimeException();
-                            }
-                        });
-
-                    });
+                    list.forEach(e -> nonActiveList.forEach(i -> {
+                        if(e.getX()-1 == i.getX() && e.getY() == i.getY()) {
+                            throw new RuntimeException();
+                        }
+                    }));
                     list.forEach(x -> x.setX(x.getX() - 1));
                     break;
                 } catch (RuntimeException e) {
@@ -52,13 +49,11 @@ public class Controller {
             case RIGHT:
                 try {
 
-                    list.forEach(e -> {
-                        nonActiveList.forEach(i -> {
-                            if(e.getX()+1 == i.getX() && e.getY() == i.getY()) {
-                                throw new RuntimeException();
-                            }
-                        });
-                    });
+                    list.forEach(e -> nonActiveList.forEach(i -> {
+                        if(e.getX()+1 == i.getX() && e.getY() == i.getY()) {
+                            throw new RuntimeException();
+                        }
+                    }));
                     list.forEach(x -> x.setX(x.getX() + 1));
                     break;
                 } catch (RuntimeException e) {
@@ -69,7 +64,7 @@ public class Controller {
     }
 
     public boolean checkForBlockBelow(ArrayList<Block> list, Block b) {
-        List temp = list.stream()
+        List<Block> temp = list.stream()
                 .filter(f -> f.getY() - b.getY() == 1 && f.getX() == b.getX())
                 .collect(Collectors.toList());
         return temp.size() > 0;
