@@ -23,14 +23,14 @@ public class Main extends Application {
     private final int SIZE = 25;
     private GraphicsContext gc;
     private KeyCode keycode = KeyCode.K;
-    private Controller controller = new Controller();
+    private final Controller controller = new Controller();
 
-    private ArrayList<Block> activeBlockList = new ArrayList<>(); // This holds the current block moving. When block active is false remove from this list and add to another.
-    private ArrayList<Block> nonActiveBlockList = new ArrayList<>(); // List to hold all non-active blocks
-    private Score gameScore = new Score();
+    private final ArrayList<Block> activeBlockList = new ArrayList<>(); // This holds the current block moving. When block active is false remove from this list and add to another.
+    private final ArrayList<Block> nonActiveBlockList = new ArrayList<>(); // List to hold all non-active blocks
+    private final Score gameScore = new Score();
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
         Canvas canvas = new Canvas(GAME_WIDTH + 200, GAME_HEIGHT);
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
@@ -38,19 +38,11 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(new StackPane(canvas)));
         primaryStage.show();
         canvas.setOnKeyPressed(e -> {
-            switch(e.getCode()) {
-                case UP:
-                    keycode = KeyCode.UP;
-                    break;
-                case LEFT:
-                    keycode = KeyCode.LEFT;
-                    break;
-                case RIGHT:
-                    keycode = KeyCode.RIGHT;
-                    break;
-                case DOWN:
-                    keycode = KeyCode.DOWN;
-                    break;
+            switch (e.getCode()) {
+                case UP -> keycode = KeyCode.UP;
+                case LEFT -> keycode = KeyCode.LEFT;
+                case RIGHT -> keycode = KeyCode.RIGHT;
+                case DOWN -> keycode = KeyCode.DOWN;
             }
         });
 
@@ -124,7 +116,7 @@ public class Main extends Application {
         // for blocks Y19 look at X0 to X10. Move bottom to top.
         // todo: check for multiple line clears
         for(int i = 19; i > 0; i--) {
-            List fullRows = nonActiveBlockList.stream()
+            List<Block> fullRows = nonActiveBlockList.stream()
                     .filter(f -> f.getY() == 19)
                     .collect(Collectors.toList());
             if(fullRows.size() == 10) {
@@ -132,9 +124,7 @@ public class Main extends Application {
                     nonActiveBlockList.remove(e);
                     gameScore.lineClear(1);
                 });
-                nonActiveBlockList.forEach(e -> {
-                    e.setY(e.getY() + 1);
-                });
+                nonActiveBlockList.forEach(e -> e.setY(e.getY() + 1));
             }
         }
         keycode = KeyCode.E;
