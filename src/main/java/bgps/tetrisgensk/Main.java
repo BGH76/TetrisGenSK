@@ -27,6 +27,7 @@ public class Main extends Application {
 
     private ArrayList<Block> activeBlockList = new ArrayList<>(); // This holds the current block moving. When block active is false remove from this list and add to another.
     private ArrayList<Block> nonActiveBlockList = new ArrayList<>(); // List to hold all non-active blocks
+    private Score gameScore = new Score();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -121,6 +122,7 @@ public class Main extends Application {
 
         // Check non-active list row by row and determine if the row is full
         // for blocks Y19 look at X0 to X10. Move bottom to top.
+        // todo: check for multiple line clear
         for(int i = 19; i > 0; i--) {
             List fullRows = nonActiveBlockList.stream()
                     .filter(f -> f.getY() == 19)
@@ -129,7 +131,8 @@ public class Main extends Application {
                 System.out.println(fullRows);
                 fullRows.forEach(e -> {
                     nonActiveBlockList.remove(e);
-                    // todo: update score
+                    gameScore.lineClear(1);
+
                 });
                 nonActiveBlockList.forEach(e -> {
                     e.setY(e.getY() + 1);
