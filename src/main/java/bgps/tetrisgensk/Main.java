@@ -122,29 +122,23 @@ public class Main extends Application {
 
         // Check non-active list row by row and determine if the row is full
         // for blocks Y19 look at X0 to X10. Move bottom to top.
-        // todo: check for multiple line clear
+        // todo: check for multiple line clears
         for(int i = 19; i > 0; i--) {
             List fullRows = nonActiveBlockList.stream()
                     .filter(f -> f.getY() == 19)
                     .collect(Collectors.toList());
             if(fullRows.size() == 10) {
-                System.out.println(fullRows);
                 fullRows.forEach(e -> {
                     nonActiveBlockList.remove(e);
                     gameScore.lineClear(1);
-
                 });
                 nonActiveBlockList.forEach(e -> {
                     e.setY(e.getY() + 1);
                 });
             }
         }
-
-
         keycode = KeyCode.E;
     }
-
-
     public static void main(String[] args) {
         launch(args);
     }

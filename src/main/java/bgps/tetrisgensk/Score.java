@@ -22,7 +22,7 @@ public class Score {
     public int getScore() {
         return score;
     }
-    public void addScore(int score) {
+    private void addScore(int score) {
         this.score += score;
     }
     public void clearScore() {
