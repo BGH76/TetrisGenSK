@@ -13,7 +13,6 @@ public class Controller {
 
     public static int XMAX = 250;
     public static int YMAX = 500;
-    public static int[][] GRID;
     private int form; //Stores form of current piece. If form is 1 then shape is in the upright position.
 
 
@@ -49,7 +48,6 @@ public class Controller {
                     list.get(2).setY(list.get(0).getY());
                     list.get(3).setX(list.get(0).getX()+3); // moves top block 3 spaces to the right of bottom block
                     list.get(3).setY(list.get(0).getY());
-                    System.out.println("Piece was vertical but is now horizontal");
                 }
                 else if(form == 2) {                                      // if piece is horizontal
                     list.get(1).setY(list.get(0).getY()+1);
@@ -60,7 +58,6 @@ public class Controller {
 
                     list.get(3).setY(list.get(0).getY()+3);
                     list.get(3).setX(list.get(0).getX());
-                    System.out.println("Piece was in form 'Horizontal A' but is now Downward");
                 }
                 else if (form == 3){                                      //if piece is downward
                     list.get(1).setX(list.get(0).getX()-1);
@@ -69,7 +66,6 @@ public class Controller {
                     list.get(2).setY(list.get(0).getY());
                     list.get(3).setX(list.get(0).getX()-3);
                     list.get(3).setY(list.get(0).getY());
-                    System.out.println("Piece was downward but is now in form 'Horizontal B'");
                 }
                 else if(form == 4) {                                      // if piece is horizontal pt. 2
                     list.get(1).setY(list.get(0).getY()-1);
@@ -80,7 +76,6 @@ public class Controller {
 
                     list.get(3).setY(list.get(0).getY()-3);
                     list.get(3).setX(list.get(0).getX());
-                    System.out.println("Piece was in form 'Horizontal B' but is now vertical");
                 }
 
                 //Todo:
@@ -133,4 +128,9 @@ public class Controller {
         return temp.size() > 0;
     }
 
+    //Todo: check if move is valid given the constraints
+    public boolean checkMove(ArrayList<Block>list) {
+
+        return true;
+    }
 }
