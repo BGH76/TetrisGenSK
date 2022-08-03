@@ -67,6 +67,7 @@ public class Main extends Application {
             }
         }
         // Score Display
+        gc.clearRect(300, 50, 100, 50);
         gc.setFont(Font.font(25));
         gc.setFill(Color.GREEN); // todo: color can be changed to something more fitting.
         gc.fillText("Score\n  " + gameScore.getScore(), 300, 50);
