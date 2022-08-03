@@ -67,6 +67,7 @@ public class Main extends Application {
             }
         }
         // Score Display
+        gc.clearRect(300, 50, 100, 50);
         gc.setFont(Font.font(25));
         gc.setFill(Color.GREEN); // todo: color can be changed to something more fitting.
         gc.fillText("Score\n  " + gameScore.getScore(), 300, 50);
@@ -76,10 +77,10 @@ public class Main extends Application {
 
         // todo: Test code. Blocks should be created and added to the list in the BlockFactory
         if(activeBlockList.size() < 1) {
-            activeBlockList.add(new Block(1,5, 0, true)); // todo: need to add shape field to pass into controller and rotate as needed.
-            activeBlockList.add(new Block(2, 6, 0, true));
-            activeBlockList.add(new Block(3, 7, 0, true));
-            activeBlockList.add(new Block(4, 8, 0, true));
+            activeBlockList.add(new Block(1,5, 0, true, Color.RED)); // todo: need to add shape field to pass into controller and rotate as needed.
+            activeBlockList.add(new Block(2, 6, 0, true, Color.RED));
+            activeBlockList.add(new Block(3, 7, 0, true, Color.RED));
+            activeBlockList.add(new Block(4, 8, 0, true, Color.RED));
         }
 
         // Rotate active block shape

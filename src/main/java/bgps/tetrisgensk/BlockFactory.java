@@ -1,11 +1,14 @@
 package bgps.tetrisgensk;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BlockFactory {
 
+    private final Color[] color = {Color.RED, Color.GREEN, Color.ORANGE, Color.BLUE};
     private final Map<Integer, Integer[][]> shapeMap = new HashMap<>();// Create Hashmap of shapes.
 
     {
@@ -31,11 +34,11 @@ public class BlockFactory {
         ArrayList<Block> list = new ArrayList<>();
         Integer[][] shape = shapeMap.get((int)(Math.floor(Math.random()*5))+1);
         int position = (int)Math.floor(Math.random()*8);
-
-        list.add(new Block(1,shape[0][0]+position,shape[0][1],true));
-        list.add(new Block(2,shape[1][0]+position,shape[1][1],true));
-        list.add(new Block(3,shape[2][0]+position,shape[2][1],true));
-        list.add(new Block(4,shape[3][0]+position,shape[3][1],true));
+        int colorChoice = (int) (Math.random() * 4);
+        list.add(new Block(1,shape[0][0]+position,shape[0][1],true, color[colorChoice]));
+        list.add(new Block(2,shape[1][0]+position,shape[1][1],true, color[colorChoice]));
+        list.add(new Block(3,shape[2][0]+position,shape[2][1],true, color[colorChoice]));
+        list.add(new Block(4,shape[3][0]+position,shape[3][1],true, color[colorChoice]));
 
         return list;
     }

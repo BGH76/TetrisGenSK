@@ -8,14 +8,15 @@ public class Block {
     private int X;
     private int Y;
     private boolean active;
-    private final Color color = Color.RED;
+    private final Color color;
     // todo: Make colors random
 
-    public Block(int blockNumber, int x, int y, boolean active) {
+    public Block(int blockNumber, int x, int y, boolean active, Color color) {
         this.blockNumber = blockNumber;
         X = x;
         Y = y;
         this.active = active;
+        this.color = color;
     }
 
     public int getBlockNumber() {
