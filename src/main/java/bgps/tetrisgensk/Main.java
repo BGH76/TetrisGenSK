@@ -96,6 +96,11 @@ public class Main extends Application {
         }
         if(futureBlockList.size() < 1) {
             futureBlockList.addAll(blockFactory.getNewPiece());
+            gc.clearRect(250, 110, 200, 100);
+            futureBlockList.forEach(e -> {
+                gc.setFill(e.getColor());
+                gc.fillRect(e.getX()*SIZE +195, e.getY()*SIZE+120, SIZE-1,SIZE-1);
+            });
         }
 
         // Rotate active block shape
@@ -103,7 +108,7 @@ public class Main extends Application {
 
         // Draw active blocks;
         activeBlockList.forEach(e -> {
-            gc.setFill(Color.RED);
+            gc.setFill(e.getColor());
             gc.fillRect(e.getX() * SIZE, e.getY() * SIZE, SIZE-1, SIZE-1);
         });
         // Check for bottom or hitting another block
@@ -129,7 +134,7 @@ public class Main extends Application {
 
         // draw nonActiveBlockList
         nonActiveBlockList.forEach(e -> {
-            gc.setFill(Color.RED); //todo: get color from block
+            gc.setFill(e.getColor());
             gc.fillRect(e.getX() * SIZE, e.getY() * SIZE, SIZE-1, SIZE-1);
         });
 
@@ -137,8 +142,9 @@ public class Main extends Application {
         // for blocks Y19 look at X0 to X10. Move bottom to top.
         // todo: check for multiple line clears
         for(int i = 19; i > 0; i--) {
+            int temp = i;
             List<Block> fullRows = nonActiveBlockList.stream()
-                    .filter(f -> f.getY() == 19)
+                    .filter(f -> f.getY() == temp)
                     .collect(Collectors.toList());
             if(fullRows.size() == 10) {
                 fullRows.forEach(e -> {
@@ -146,7 +152,7 @@ public class Main extends Application {
                     // todo: check for multiple line clears
                     gameScore.lineClear(1);
                 });
-                nonActiveBlockList.forEach(e -> e.setY(e.getY() + 1));
+                nonActiveBlockList.forEach(e -> e.setY(e.getY() + 1)); // todo: needs fixed. only checks if blocks move down after blocks removed. Need to checks until blocks hit other blocks or bottom
             }
         }
         keycode = KeyCode.E;
