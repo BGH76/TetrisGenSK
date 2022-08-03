@@ -32,13 +32,16 @@ public class BlockFactory {
     public ArrayList<Block> getNewPiece(){
 
         ArrayList<Block> list = new ArrayList<>();
-        Integer[][] shape = shapeMap.get((int)(Math.floor(Math.random()*5))+1);
-        int position = (int)Math.floor(Math.random()*8);
+        int temp = (int)(Math.floor(Math.random()*5))+1;
+//        Integer[][] shape = shapeMap.get((int)(Math.floor(Math.random()*5))+1);
+        Integer[][] shape = shapeMap.get(temp);
+//        int position = (int)Math.floor(Math.random()*8);
+        int position = 4;
         int colorChoice = (int) (Math.random() * 4);
-        list.add(new Block(1,shape[0][0]+position,shape[0][1],true, color[colorChoice]));
-        list.add(new Block(2,shape[1][0]+position,shape[1][1],true, color[colorChoice]));
-        list.add(new Block(3,shape[2][0]+position,shape[2][1],true, color[colorChoice]));
-        list.add(new Block(4,shape[3][0]+position,shape[3][1],true, color[colorChoice]));
+        list.add(new Block(1,shape[0][0]+position,shape[0][1],true, color[colorChoice], temp));
+        list.add(new Block(2,shape[1][0]+position,shape[1][1],true, color[colorChoice], temp));
+        list.add(new Block(3,shape[2][0]+position,shape[2][1],true, color[colorChoice], temp));
+        list.add(new Block(4,shape[3][0]+position,shape[3][1],true, color[colorChoice], temp));
 
         return list;
     }
