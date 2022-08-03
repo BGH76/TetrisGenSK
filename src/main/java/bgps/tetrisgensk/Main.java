@@ -25,9 +25,11 @@ public class Main extends Application {
     private GraphicsContext gc;
     private KeyCode keycode = KeyCode.K;
     private final Controller controller = new Controller();
+    private final BlockFactory blockFactory = new BlockFactory();
 
-    private final ArrayList<Block> activeBlockList = new ArrayList<>(); // This holds the current block moving. When block active is false remove from this list and add to another.
-    private final ArrayList<Block> nonActiveBlockList = new ArrayList<>(); // List to hold all non-active blocks
+    private ArrayList<Block> activeBlockList = new ArrayList<>(); // This holds the current block moving. When block active is false remove from this list and add to another.
+    private ArrayList<Block> nonActiveBlockList = new ArrayList<>(); // List to hold all non-active blocks
+    private ArrayList<Block> futureBlockList = new ArrayList<>(); // Holds the future block that will display on the score panel before blocks are moved to the activeBlockList
     private final Score gameScore = new Score();
 
     @Override
@@ -46,11 +48,15 @@ public class Main extends Application {
                 case DOWN -> keycode = KeyCode.DOWN;
             }
         });
-
+        setUp();
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(150), e -> run(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
+    }
+
+    public void setUp() {
+        futureBlockList = blockFactory.getNewPiece();
     }
 
     public void run(GraphicsContext gc) {
@@ -76,11 +82,20 @@ public class Main extends Application {
 
 
         // todo: Test code. Blocks should be created and added to the list in the BlockFactory
+//        if(activeBlockList.size() < 1) {
+//            activeBlockList.add(new Block(1,5, 0, true, Color.RED)); // todo: need to add shape field to pass into controller and rotate as needed.
+//            activeBlockList.add(new Block(2, 6, 0, true, Color.RED));
+//            activeBlockList.add(new Block(3, 7, 0, true, Color.RED));
+//            activeBlockList.add(new Block(4, 8, 0, true, Color.RED));
+//        }
+
+
         if(activeBlockList.size() < 1) {
-            activeBlockList.add(new Block(1,5, 0, true, Color.RED)); // todo: need to add shape field to pass into controller and rotate as needed.
-            activeBlockList.add(new Block(2, 6, 0, true, Color.RED));
-            activeBlockList.add(new Block(3, 7, 0, true, Color.RED));
-            activeBlockList.add(new Block(4, 8, 0, true, Color.RED));
+            activeBlockList.addAll(futureBlockList);
+            futureBlockList.clear();
+        }
+        if(futureBlockList.size() < 1) {
+            futureBlockList.addAll(blockFactory.getNewPiece());
         }
 
         // Rotate active block shape
