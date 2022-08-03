@@ -49,10 +49,9 @@ public class Main extends Application {
             }
         });
         setUp();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(150), e -> run(gc)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(230), e -> run(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-
     }
 
     public void setUp() {
@@ -78,12 +77,9 @@ public class Main extends Application {
         gc.setFill(Color.GREEN); // todo: color can be changed to something more fitting.
         gc.fillText("Score\n  " + gameScore.getScore(), 300, 50);
 
-        // todo: Call block factory. Pass in activeBlockList. Factory should randomly select shape and add to list.
-
-
         // todo: Test code. Blocks should be created and added to the list in the BlockFactory
 //        if(activeBlockList.size() < 1) {
-//            activeBlockList.add(new Block(1,5, 0, true, Color.RED)); // todo: need to add shape field to pass into controller and rotate as needed.
+//            activeBlockList.add(new Block(1,5, 0, true, Color.RED));
 //            activeBlockList.add(new Block(2, 6, 0, true, Color.RED));
 //            activeBlockList.add(new Block(3, 7, 0, true, Color.RED));
 //            activeBlockList.add(new Block(4, 8, 0, true, Color.RED));
@@ -151,10 +147,19 @@ public class Main extends Application {
                     nonActiveBlockList.remove(e);
                     // todo: check for multiple line clears
                     gameScore.lineClear(1);
+                    nonActiveBlockList.forEach(b -> {
+                        if(b.getY() < temp) {
+                            b.setActive(true);
+                        }
+                    });
                 });
-                nonActiveBlockList.forEach(e -> e.setY(e.getY() + 1)); // todo: needs fixed. only checks if blocks move down after blocks removed. Need to checks until blocks hit other blocks or bottom
             }
         }
+        nonActiveBlockList.forEach(e -> {
+            if(e.getY() != 19 && !controller.checkForBlockBelow(nonActiveBlockList, e) && e.isActive()) {
+                e.setY(e.getY() +1);
+            }
+        });
         keycode = KeyCode.E;
     }
     public static void main(String[] args) {
