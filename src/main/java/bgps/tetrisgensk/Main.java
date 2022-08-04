@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -31,9 +32,11 @@ public class Main extends Application {
     private ArrayList<Block> nonActiveBlockList = new ArrayList<>(); // List to hold all non-active blocks
     private ArrayList<Block> futureBlockList = new ArrayList<>(); // Holds the future block that will display on the score panel before blocks are moved to the activeBlockList
     private final Score gameScore = new Score();
+    private String name;
 
     @Override
     public void start(Stage primaryStage) {
+        String name = askForName();
         Canvas canvas = new Canvas(GAME_WIDTH + 200, GAME_HEIGHT);
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
@@ -161,6 +164,14 @@ public class Main extends Application {
             }
         });
         keycode = KeyCode.E;
+    }
+    static String askForName() {
+        TextInputDialog tD = new TextInputDialog("name");
+        tD.setTitle("Tetris");
+        tD.setHeaderText("Enter your name.");
+        tD.setContentText("Name:");
+        tD.showAndWait();
+        return tD.getResult();
     }
     public static void main(String[] args) {
         launch(args);
