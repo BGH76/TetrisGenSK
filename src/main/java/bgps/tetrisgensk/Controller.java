@@ -41,43 +41,48 @@ public class Controller {
 
             case UP:
                 //l shape
-                if(form == 1) {                             // if piece is vertical
-                    list.get(1).setX(list.get(0).getX()+1); // moves second block from bottom, 1 space to the right of bottom block
-                    list.get(1).setY(list.get(0).getY());
-                    list.get(2).setX(list.get(0).getX()+2);// moves second block from top, 2 spaces to the right of bottom block
-                    list.get(2).setY(list.get(0).getY());
-                    list.get(3).setX(list.get(0).getX()+3); // moves top block 3 spaces to the right of bottom block
-                    list.get(3).setY(list.get(0).getY());
+                if (list.get(0).getBlockNumber() == 3) {
+                    if(form == 1) {                             // if piece is vertical
+                        if(list.get(3).getX()+3 <= XMAX){ // add constraints
+                            list.get(1).setX(list.get(0).getX()+1); // moves second block from bottom, 1 space to the right of bottom block
+                            list.get(1).setY(list.get(0).getY());
+                            list.get(2).setX(list.get(0).getX()+2);// moves second block from top, 2 spaces to the right of bottom block
+                            list.get(2).setY(list.get(0).getY());
+                            list.get(3).setX(list.get(0).getX()+3); // moves top block 3 spaces to the right of bottom block
+                            list.get(3).setY(list.get(0).getY());
+                        }
+                    }
+                    else if(form == 2) {                                      // if piece is horizontal
+                        list.get(1).setY(list.get(0).getY()+1);
+                        list.get(1).setX(list.get(0).getX());
+
+                        list.get(2).setY(list.get(0).getY()+2);
+                        list.get(2).setX(list.get(0).getX());
+
+                        list.get(3).setY(list.get(0).getY()+3);
+                        list.get(3).setX(list.get(0).getX());
+                    }
+                    else if (form == 3){                                      //if piece is downward
+                        if(list.get(3).getX()-3 >= XMAX){
+                            list.get(1).setX(list.get(0).getX()-1);
+                            list.get(1).setY(list.get(0).getY());
+                            list.get(2).setX(list.get(0).getX()-2);
+                            list.get(2).setY(list.get(0).getY());
+                            list.get(3).setX(list.get(0).getX()-3);
+                            list.get(3).setY(list.get(0).getY());
+                        }
+                    }
+                    else if(form == 4) {                                      // if piece is horizontal pt. 2
+                        list.get(1).setY(list.get(0).getY()-1);
+                        list.get(1).setX(list.get(0).getX());
+
+                        list.get(2).setY(list.get(0).getY()-2);
+                        list.get(2).setX(list.get(0).getX());
+
+                        list.get(3).setY(list.get(0).getY()-3);
+                        list.get(3).setX(list.get(0).getX());
+                    }
                 }
-                else if(form == 2) {                                      // if piece is horizontal
-                    list.get(1).setY(list.get(0).getY()+1);
-                    list.get(1).setX(list.get(0).getX());
-
-                    list.get(2).setY(list.get(0).getY()+2);
-                    list.get(2).setX(list.get(0).getX());
-
-                    list.get(3).setY(list.get(0).getY()+3);
-                    list.get(3).setX(list.get(0).getX());
-                }
-                else if (form == 3){                                      //if piece is downward
-                    list.get(1).setX(list.get(0).getX()-1);
-                    list.get(1).setY(list.get(0).getY());
-                    list.get(2).setX(list.get(0).getX()-2);
-                    list.get(2).setY(list.get(0).getY());
-                    list.get(3).setX(list.get(0).getX()-3);
-                    list.get(3).setY(list.get(0).getY());
-                }
-                else if(form == 4) {                                      // if piece is horizontal pt. 2
-                    list.get(1).setY(list.get(0).getY()-1);
-                    list.get(1).setX(list.get(0).getX());
-
-                    list.get(2).setY(list.get(0).getY()-2);
-                    list.get(2).setX(list.get(0).getX());
-
-                    list.get(3).setY(list.get(0).getY()-3);
-                    list.get(3).setX(list.get(0).getX());
-                }
-
                 //Todo:
                 //T shape
 
