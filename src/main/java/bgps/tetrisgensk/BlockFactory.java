@@ -14,7 +14,7 @@ public class BlockFactory {
     {
         Integer[][] coordinates = {{0,0},{1,0},{1,1},{2,0}};//T
         shapeMap.put(1,coordinates);
-        coordinates = new Integer[][]{{0,0},{1,0},{1,1},{0,1}};//Square
+        coordinates = new Integer[][]{{0,0},{1,0},{0,1},{1,1}};//Square
         shapeMap.put(2,coordinates);
         coordinates = new Integer[][]{{0,0},{1,0},{2,0},{3,0}};//Stick
         shapeMap.put(3,coordinates);

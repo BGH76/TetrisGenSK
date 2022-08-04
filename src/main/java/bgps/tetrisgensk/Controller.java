@@ -97,7 +97,8 @@ public class Controller {
                             throw new RuntimeException();
                         }
                     }));
-                    list.forEach(x -> x.setX(x.getX() - 1));
+                    if(list.get(0).getX() > 0)// The condition to stop the pieces from going outside. When rotating the pieces the 1st should be at the extreme left or put the key that is extreme left
+                        list.forEach(x -> x.setX(x.getX() - 1));
                     break;
                 } catch (RuntimeException e) {
                     break;
@@ -112,7 +113,8 @@ public class Controller {
                             throw new RuntimeException();
                         }
                     }));
-                    list.forEach(x -> x.setX(x.getX() + 1));
+                    if(list.get(3).getX() < 9)// The condition to stop the pieces from going outside. When rotating the pieces the 3rd should be at the extreme right or put the key that is extreme right
+                        list.forEach(x -> x.setX(x.getX() + 1));
                     break;
                 } catch (RuntimeException e) {
                     break;
