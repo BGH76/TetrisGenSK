@@ -1,5 +1,9 @@
 package bgps.tetrisgensk;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Score {
     // todo: save score to file
     private enum lineClearValues {
@@ -34,6 +38,15 @@ public class Score {
             case 2 -> addScore(lineClearValues.TWO.getValue());
             case 3 -> addScore(lineClearValues.THREE.getValue());
             case 4 -> addScore(lineClearValues.FOUR.getValue());
+        }
+    }
+    // todo: save score to file on gameover
+    public void saveToFile(String name) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("scores.txt",true))) {
+            bw.write(getScore() + " -- " + name);
+            bw.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
