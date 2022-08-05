@@ -26,7 +26,7 @@ public class Controller {
             case UP:
                 //T shape
                 if(list.get(0).getBlockType() == 1)
-                    list = getRotatedTBlock(list,form);
+                    getRotatedTBlock(list,nonActiveList,form);
 
                 //Square shape No Rotation Needed
 
@@ -53,7 +53,7 @@ public class Controller {
                             throw new RuntimeException();
                         }
                     }));
-                    if(list.get(0).getX() > 0)// The condition to stop the pieces from going outside. When rotating the pieces the 1st should be at the extreme left or put the key that is extreme left
+                    if(list.get(0).getX() > 0 & list.get(1).getX() > 0 & list.get(2).getX() > 0 & list.get(3).getX() > 0)// The condition to stop the pieces from going outside. When rotating the pieces the 1st should be at the extreme left or put the key that is extreme left
                         list.forEach(x -> x.setX(x.getX() - 1));
                     break;
                 } catch (RuntimeException e) {
@@ -69,7 +69,7 @@ public class Controller {
                             throw new RuntimeException();
                         }
                     }));
-                    if(list.get(3).getX() < 9)// The condition to stop the pieces from going outside. When rotating the pieces the 3rd should be at the extreme right or put the key that is extreme right
+                    if(list.get(0).getX() < 9 & list.get(1).getX() < 9 & list.get(2).getX() < 9 & list.get(3).getX() < 9)// The condition to stop the pieces from going outside. When rotating the pieces the 3rd should be at the extreme right or put the key that is extreme right
                         list.forEach(x -> x.setX(x.getX() + 1));
                     break;
                 } catch (RuntimeException e) {
@@ -94,16 +94,16 @@ public class Controller {
             case 1://T
                 if(list.get(0).getY() == list.get(1).getY() & list.get(0).getY() == list.get(3).getY())//all Ys are the same
                 {
-                    if (list.get(0).getY() - list.get(2).getY() < 0)//Is the block pointing down T
+                    if (list.get(0).getY() - list.get(2).getY() < 0)//Is the block pointing down T -> left
                         orientation = 1;
-                    else
+                    else//Up -> right
                         orientation = 2;
                 }
                 else if(list.get(0).getX() == list.get(1).getX() & list.get(0).getX() == list.get(3).getX())//all Xs are the same
                 {
-                    if (list.get(0).getX() - list.get(2).getX() < 0)//Is the block pointing down T
+                    if (list.get(0).getX() - list.get(2).getX() < 0)//Is the block pointing  right -> down
                         orientation = 3;
-                    else
+                    else//left -> up
                         orientation = 4;
                 }
                 break;
@@ -235,8 +235,52 @@ public class Controller {
     }
 
     //Rotate T Block
-    public ArrayList<Block> getRotatedTBlock(ArrayList<Block> list, int orientation){
-        return list;
+    public void getRotatedTBlock(ArrayList<Block> list, ArrayList<Block>  nonActiveList, int orientation){
+        if (orientation == 1){//Down to left
+            if(checkForBlocksAndBorder(nonActiveList,list.get(1).getX(),list.get(1).getY()-1))
+            {
+                list.get(3).setX(list.get(2).getX());
+                list.get(3).setY(list.get(2).getY());
+                list.get(2).setX(list.get(0).getX());
+                list.get(2).setY(list.get(0).getY());
+                list.get(0).setX(list.get(1).getX());
+                list.get(0).setY(list.get(1).getY()-1);
+            }
+        }
+        else if(orientation == 2){//up to right
+            if(checkForBlocksAndBorder(nonActiveList,list.get(1).getX(),list.get(1).getY()+1))
+            {
+                list.get(3).setX(list.get(2).getX());
+                list.get(3).setY(list.get(2).getY());
+                list.get(2).setX(list.get(0).getX());
+                list.get(2).setY(list.get(0).getY());
+                list.get(0).setX(list.get(1).getX());
+                list.get(0).setY(list.get(1).getY()+1);
+            }
+        }
+        else if(orientation == 3){//right to down
+            if(checkForBlocksAndBorder(nonActiveList,list.get(1).getX()-1,list.get(1).getY()))
+            {
+                list.get(3).setX(list.get(2).getX());
+                list.get(3).setY(list.get(2).getY());
+                list.get(2).setX(list.get(0).getX());
+                list.get(2).setY(list.get(0).getY());
+                list.get(0).setX(list.get(1).getX()-1);
+                list.get(0).setY(list.get(1).getY());
+            }
+        }
+        else{//left to up
+            if(checkForBlocksAndBorder(nonActiveList,list.get(1).getX()+1,list.get(1).getY()))
+            {
+                list.get(3).setX(list.get(2).getX());
+                list.get(3).setY(list.get(2).getY());
+                list.get(2).setX(list.get(0).getX());
+                list.get(2).setY(list.get(0).getY());
+                list.get(0).setX(list.get(1).getX()+1);
+                list.get(0).setY(list.get(1).getY());
+            }
+        }
+
     }
 
     //Rotate Dog Block
