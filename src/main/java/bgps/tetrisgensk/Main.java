@@ -15,8 +15,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main extends Application {
 
@@ -33,10 +35,11 @@ public class Main extends Application {
     private ArrayList<Block> futureBlockList = new ArrayList<>(); // Holds the future block that will display on the score panel before blocks are moved to the activeBlockList
     private final Score gameScore = new Score();
     private String name;
+    private Timeline timeline;
 
     @Override
     public void start(Stage primaryStage) {
-        String name = askForName();
+        name = askForName();
         Canvas canvas = new Canvas(GAME_WIDTH + 200, GAME_HEIGHT);
         gc = canvas.getGraphicsContext2D();
         canvas.setFocusTraversable(true);
@@ -52,7 +55,7 @@ public class Main extends Application {
             }
         });
         setUp();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(230), e -> run(gc)));
+        timeline = new Timeline(new KeyFrame(Duration.millis(230), e -> run(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
@@ -79,15 +82,6 @@ public class Main extends Application {
         gc.setFont(Font.font(25));
         gc.setFill(Color.GREEN); // todo: color can be changed to something more fitting.
         gc.fillText("Score\n  " + gameScore.getScore(), 300, 50);
-
-        // todo: Test code. Blocks should be created and added to the list in the BlockFactory
-//        if(activeBlockList.size() < 1) {
-//            activeBlockList.add(new Block(1,5, 0, true, Color.RED));
-//            activeBlockList.add(new Block(2, 6, 0, true, Color.RED));
-//            activeBlockList.add(new Block(3, 7, 0, true, Color.RED));
-//            activeBlockList.add(new Block(4, 8, 0, true, Color.RED));
-//        }
-
 
         if(activeBlockList.size() < 1) {
             activeBlockList.addAll(futureBlockList);
@@ -163,6 +157,15 @@ public class Main extends Application {
                 e.setY(e.getY() +1);
             }
         });
+        // check for game over
+        if(nonActiveBlockList.size() > 18) {
+            if(checkForGameOver(nonActiveBlockList)) {
+                System.out.println("Game is over"); // todo: remove after testing
+                gameScore.saveToFile(name);
+                timeline.stop();
+            }
+        }
+
         keycode = KeyCode.E;
     }
     static String askForName() {
@@ -172,6 +175,10 @@ public class Main extends Application {
         tD.setContentText("Name:");
         tD.showAndWait();
         return tD.getResult();
+    }
+
+    static boolean checkForGameOver(ArrayList<Block> list) {
+        return list.get(list.size() - 1).getY() == 0 || list.get(list.size() - 2).getY() == 0 || list.get(list.size() - 3).getY() == 0 || list.get(list.size() - 4).getY() == 0;
     }
     public static void main(String[] args) {
         launch(args);
