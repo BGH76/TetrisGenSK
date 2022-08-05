@@ -41,7 +41,7 @@ public class Controller {
 
                 // Z shape
                 else if(list.get(0).getBlockType() == 5)
-                    list = getRotatedDogBlock(list,form);
+                    getRotatedDogBlock(list,nonActiveList,form);
 
                 break;
 
@@ -131,20 +131,20 @@ public class Controller {
                 }
                 break;
             case 5://Dog
-                if(list.get(0).getX() - list.get(3).getX() == 2)//Horoixontal Z
+                if(Math.abs(list.get(0).getX() - list.get(3).getX()) == 2)//Horoixontal Z
                 {
-                    if(list.get(0).getY() > list.get(3).getY())
-                        orientation = 4; //left
+                    if(list.get(0).getY() < list.get(3).getY())
+                        orientation = 4; //left -> up
                     else
-                        orientation = 3;//right
+                        orientation = 3;//right -> down
 
                 }
                 else //Vertical
                 {
                     if(list.get(0).getX() > list.get(3).getX())
-                        orientation = 1; //Up
+                        orientation = 1; //Up -> right
                     else
-                        orientation = 2;//Down
+                        orientation = 2;//Down -> left
 
                 }
                 break;
@@ -284,8 +284,52 @@ public class Controller {
     }
 
     //Rotate Dog Block
-    public ArrayList<Block> getRotatedDogBlock(ArrayList<Block> list, int orientation){
-        return list;
+    public void getRotatedDogBlock(ArrayList<Block> list, ArrayList<Block>  nonActiveList, int orientation){
+        if(orientation == 1){ //Up to right
+            if(checkForBlocksAndBorder(nonActiveList,list.get(2).getX()-1, list.get(2).getY(), list.get(1).getX()+1, list.get(1).getY()))
+            {
+                list.get(2).setX(list.get(0).getX());
+                list.get(2).setY(list.get(0).getY());
+                list.get(3).setX(list.get(2).getX()-1);
+                list.get(3).setY(list.get(2).getY());
+                list.get(0).setX(list.get(1).getX()+1);
+                list.get(0).setY(list.get(1).getY());
+            }
+        }
+        else if(orientation == 2){//Down to left
+            if(checkForBlocksAndBorder(nonActiveList,list.get(2).getX()+1, list.get(2).getY(), list.get(1).getX()-1, list.get(1).getY()))
+            {
+                list.get(2).setX(list.get(0).getX());
+                list.get(2).setY(list.get(0).getY());
+                list.get(3).setX(list.get(2).getX()+1);
+                list.get(3).setY(list.get(2).getY());
+                list.get(0).setX(list.get(1).getX()-1);
+                list.get(0).setY(list.get(1).getY());
+            }
+        }
+        else if(orientation == 3){//right to down
+            if(checkForBlocksAndBorder(nonActiveList,list.get(2).getX(),list.get(2).getY()-1,list.get(1).getX(),list.get(1).getY()+1))
+            {
+                list.get(2).setX(list.get(0).getX());
+                list.get(2).setY(list.get(0).getY());
+                list.get(3).setX(list.get(2).getX());
+                list.get(3).setY(list.get(2).getY()-1);
+                list.get(0).setX(list.get(1).getX());
+                list.get(0).setY(list.get(1).getY()+1);
+            }
+        }
+        else{//left to up
+            if(checkForBlocksAndBorder(nonActiveList,list.get(2).getX(),list.get(2).getY()+1,list.get(1).getX(),list.get(1).getY()-1))
+            {
+                list.get(2).setX(list.get(0).getX());
+                list.get(2).setY(list.get(0).getY());
+                list.get(3).setX(list.get(2).getX());
+                list.get(3).setY(list.get(2).getY()+1);
+                list.get(0).setX(list.get(1).getX());
+                list.get(0).setY(list.get(1).getY()-1);
+            }
+        }
+
     }
 
     public boolean checkForBlocksAndBorder(ArrayList<Block> list, int  ...pos){
