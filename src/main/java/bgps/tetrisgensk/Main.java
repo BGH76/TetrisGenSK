@@ -3,6 +3,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,12 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main extends Application {
 
@@ -35,7 +33,7 @@ public class Main extends Application {
     private ArrayList<Block> futureBlockList = new ArrayList<>(); // Holds the future block that will display on the score panel before blocks are moved to the activeBlockList
     private final Score gameScore = new Score();
     private String name;
-    private Timeline timeline;
+    private static Timeline timeline;
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,10 +50,12 @@ public class Main extends Application {
                 case LEFT -> keycode = KeyCode.LEFT;
                 case RIGHT -> keycode = KeyCode.RIGHT;
                 case DOWN -> keycode = KeyCode.DOWN;
+                case Y -> playAgain(gc, gameScore);
+                case E -> Platform.exit();
             }
         });
         setUp();
-        timeline = new Timeline(new KeyFrame(Duration.millis(230), e -> run(gc)));
+        timeline = new Timeline(new KeyFrame(Duration.millis(250), e -> run(gc)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
@@ -162,10 +162,12 @@ public class Main extends Application {
             if(checkForGameOver(nonActiveBlockList)) {
                 System.out.println("Game is over"); // todo: remove after testing
                 gameScore.saveToFile(name);
-                timeline.stop();
+                gameOverDisplay(gc, gameScore);
+                activeBlockList.clear();
+                nonActiveBlockList.clear();
+                timeline.pause();
             }
         }
-
         keycode = KeyCode.E;
     }
     static String askForName() {
@@ -179,6 +181,23 @@ public class Main extends Application {
 
     static boolean checkForGameOver(ArrayList<Block> list) {
         return list.get(list.size() - 1).getY() == 0 || list.get(list.size() - 2).getY() == 0 || list.get(list.size() - 3).getY() == 0 || list.get(list.size() - 4).getY() == 0;
+    }
+
+    static void playAgain(GraphicsContext gc, Score score) {
+        gc.clearRect(0, 0, 450, 500);
+        score.clearScore();
+        timeline.play();
+    }
+
+    static void gameOverDisplay(GraphicsContext gc, Score gameScore) {
+        gc.clearRect(0,0,450,500);
+        gc.setFill(Color.LIGHTGRAY);
+        gc.fillRect(0, 0, 450, 500);
+        gc.setFill(Color.GREEN);
+        gc.setFont(Font.font(35));
+        gc.fillText("Game Over!\nScore: " + gameScore.getScore(), 120, 100);
+        gc.setFont(Font.font(20));
+        gc.fillText("press ( y ) to play again\npress  ( e ) to exit game", 120, 170);
     }
     public static void main(String[] args) {
         launch(args);
