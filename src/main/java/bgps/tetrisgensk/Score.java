@@ -43,7 +43,7 @@ public class Score {
     // todo: save score to file on gameover
     public void saveToFile(String name) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("scores.txt",true))) {
-            bw.write(getScore() + " -- " + name);
+            bw.write(score + " -- " + name);
             bw.newLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
