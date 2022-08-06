@@ -208,8 +208,20 @@ public class Controller {
     //Rotate Stick Block
     public void getRotatedStickBlock(ArrayList<Block> list, ArrayList<Block>  nonActiveList, int orientation){
 
-        if(orientation == 1)//Vertical
-        {//Turn horizontal
+        if(orientation == 3)//Horizontal turn vertical
+        {//Turn Vertical
+            if(checkForBlocksAndBorder(nonActiveList,list.get(3).getX(),list.get(3).getY() + 1,list.get(3).getX(),list.get(3).getY() + 2,list.get(3).getX(),list.get(3).getY() + 3))
+            {
+                list.get(0).setX(list.get(3).getX()); // moves second block from bottom, 1 space to the right of bottom block
+                list.get(0).setY(list.get(3).getY() + 1);
+                list.get(1).setX(list.get(3).getX());// moves second block from top, 2 spaces to the right of bottom block
+                list.get(1).setY(list.get(3).getY() + 2);
+                list.get(2).setX(list.get(3).getX()); // moves top block 3 spaces to the right of bottom block
+                list.get(2).setY(list.get(3).getY() + 3);
+            }
+            //On rotation it should not hit the sides
+        }
+        else if(list.get(0).getX() < 5){//Vertical turn horizontal
             if(checkForBlocksAndBorder(nonActiveList,list.get(0).getX()+1, list.get(0).getY(),list.get(0).getX()+2,list.get(0).getY(),list.get(0).getX()+3,list.get(0).getY()))
             {
                 list.get(1).setX(list.get(0).getX() + 1); // moves second block from bottom, 1 space to the right of bottom block
@@ -219,17 +231,16 @@ public class Controller {
                 list.get(3).setX(list.get(0).getX() + 3); // moves top block 3 spaces to the right of bottom block
                 list.get(3).setY(list.get(0).getY());
             }
-            //On rotation it should not hit the sides
         }
-        else {//Horizontal turn vertical
-            if(checkForBlocksAndBorder(nonActiveList,list.get(3).getX(),list.get(3).getY() + 1,list.get(3).getX(),list.get(3).getY() + 2,list.get(3).getX(),list.get(3).getY() + 3))
+        else {
+            if(checkForBlocksAndBorder(nonActiveList,list.get(0).getX()-1, list.get(0).getY(),list.get(0).getX()-2,list.get(0).getY(),list.get(0).getX()-3,list.get(0).getY()))
             {
-                list.get(0).setX(list.get(3).getX()); // moves second block from bottom, 1 space to the right of bottom block
-                list.get(0).setY(list.get(3).getY() + 1);
-                list.get(1).setX(list.get(3).getX());// moves second block from top, 2 spaces to the right of bottom block
-                list.get(1).setY(list.get(3).getY() + 2);
-                list.get(2).setX(list.get(3).getX()); // moves top block 3 spaces to the right of bottom block
-                list.get(2).setY(list.get(3).getY() + 3);
+                list.get(1).setX(list.get(0).getX() - 1); // moves second block from bottom, 1 space to the right of bottom block
+                list.get(1).setY(list.get(0).getY());
+                list.get(2).setX(list.get(0).getX() - 2);// moves second block from top, 2 spaces to the right of bottom block
+                list.get(2).setY(list.get(0).getY());
+                list.get(3).setX(list.get(0).getX() - 3); // moves top block 3 spaces to the right of bottom block
+                list.get(3).setY(list.get(0).getY());
             }
         }
     }
