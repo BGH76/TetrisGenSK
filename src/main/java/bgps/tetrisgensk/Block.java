@@ -5,24 +5,17 @@ import javafx.scene.paint.Color;
 public class Block {
 
     private final int blockType;
-    private final int blockNumber;
+    private final Color color;
     private int X;
     private int Y;
     private boolean active;
-    private final Color color;
-    // todo: Make colors random
 
-    public Block(int blockNumber, int x, int y, boolean active, Color color, int blockType) {
-        this.blockNumber = blockNumber;
+    public Block(int x, int y, boolean active, Color color, int blockType) {
         X = x;
         Y = y;
         this.active = active;
         this.color = color;
         this.blockType = blockType;
-    }
-
-    public int getBlockNumber() {
-        return blockNumber;
     }
 
     public int getX() {
@@ -53,6 +46,8 @@ public class Block {
         return color;
     }
 
-    public int getBlockType() {return blockType;}
+    public int getBlockType() {
+        return blockType;
+    }
 }
 
